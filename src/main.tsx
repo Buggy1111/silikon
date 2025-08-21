@@ -37,7 +37,20 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// PWA Install prompt handling
+let deferredPrompt: any = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('[PWA] beforeinstallprompt event fired');
+  // Prevent the mini-infobar from appearing on mobile
+  e.preventDefault();
+  // Stash the event so it can be triggered later
+  deferredPrompt = e;
+  console.log('[PWA] Install prompt is available');
+});
+
 // PWA Application installed event
 window.addEventListener('appinstalled', (e) => {
   console.log('[PWA] VMQ aplikace byla úspěšně nainstalována');
+  deferredPrompt = null;
 });
