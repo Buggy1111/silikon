@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VMQ Production Widget</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: white;
+            width: 320px;
+            height: 150px;
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .widget-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .widget-title {
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .widget-icon {
+            width: 18px;
+            height: 18px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+        }
+
+        .status-badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.5);
+            color: #4ade80;
+        }
+
+        .status-badge.warning {
+            background: rgba(251, 191, 36, 0.2);
+            border-color: rgba(251, 191, 36, 0.5);
+            color: #fbbf24;
+        }
+
+        .status-badge.error {
+            background: rgba(248, 113, 113, 0.2);
+            border-color: rgba(248, 113, 113, 0.5);
+            color: #f87171;
+        }
+
+        .production-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .main-metric {
+            flex: 1;
+        }
+
+        .metric-value {
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .efficiency-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                #4ade80 0deg,
+                #4ade80 var(--efficiency-angle, 270deg),
+                rgba(255, 255, 255, 0.2) var(--efficiency-angle, 270deg),
+                rgba(255, 255, 255, 0.2) 360deg
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .efficiency-inner {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .efficiency-value {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .efficiency-label {
+            font-size: 8px;
+            opacity: 0.8;
+        }
+
+        .secondary-metrics {
+            display: flex;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .secondary-metric {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 6px 8px;
+            text-align: center;
+        }
+
+        .secondary-value {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .secondary-label {
+            font-size: 9px;
+            opacity: 0.7;
+        }
+
+        .trend-arrow {
+            display: inline-block;
+            margin-left: 4px;
+            font-size: 10px;
+        }
+
+        .trend-up { color: #4ade80; }
+        .trend-down { color: #f87171; }
+        .trend-stable { color: #a3a3a3; }
+
+        /* Live update animation */
+        @keyframes dataUpdate {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .updating .metric-value {
+            animation: dataUpdate 0.5s ease-in-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 300px) {
+            body {
+                width: 280px;
+                height: 130px;
+                padding: 10px;
+            }
+            
+            .metric-value {
+                font-size: 24px;
+            }
+            
+            .efficiency-circle {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .efficiency-inner {
+                width: 38px;
+                height: 38px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="widget-header">
+        <div class="widget-title">
+            <div class="widget-icon">⚡</div>
+            Výroba Live
+        </div>
+        <div class="status-badge" id="machineStatus">AKTIVNÍ</div>
+    </div>
+
+    <div class="production-display">
+        <div class="main-metric">
+            <div class="metric-value" id="currentRate">284 kg/h</div>
+            <div class="metric-label">Aktuální tempo<span class="trend-arrow trend-up" id="rateTrend">↗</span></div>
+        </div>
+        <div class="efficiency-circle" id="efficiencyCircle">
+            <div class="efficiency-inner">
+                <div class="efficiency-value" id="efficiencyValue">94%</div>
+                <div class="efficiency-label">EFF</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="secondary-metrics">
+        <div class="secondary-metric">
+            <div class="secondary-value" id="activeLines">3/3</div>
+            <div class="secondary-label">LINKY</div>
+        </div>
+        <div class="secondary-metric">
+            <div class="secondary-value" id="uptime">18.5h</div>
+            <div class="secondary-label">PROVOZ</div>
+        </div>
+        <div class="secondary-metric">
+            <div class="secondary-value" id="quality">98.7%</div>
+            <div class="secondary-label">KVALITA</div>
+        </div>
+    </div>
+
+    <script>
+        let productionData = {};
+        
+        // Initialize production widget
+        function initProductionWidget() {
+            console.log('[VMQ Production Widget] Initializing...');
+            loadProductionData();
+            setInterval(loadProductionData, 15000); // Update every 15 seconds
+        }
+
+        // Load production data
+        async function loadProductionData() {
+            try {
+                // Sample production data - in real app this would come from API
+                productionData = {
+                    currentRate: Math.floor(280 + Math.random() * 20), // kg/h
+                    rateTrend: Math.random() > 0.5 ? 'up' : 'down',
+                    efficiency: Math.floor(90 + Math.random() * 10), // %
+                    activeLines: '3/3',
+                    uptime: '18.5h',
+                    quality: (98 + Math.random() * 2).toFixed(1),
+                    machineStatus: Math.random() > 0.1 ? 'active' : 'warning',
+                    timestamp: new Date()
+                };
+
+                updateProductionDisplay();
+            } catch (error) {
+                console.error('[VMQ Production Widget] Data load error:', error);
+                showErrorState();
+            }
+        }
+
+        // Update production display
+        function updateProductionDisplay() {
+            // Add updating animation
+            document.body.classList.add('updating');
+            
+            setTimeout(() => {
+                // Update production rate
+                document.getElementById('currentRate').textContent = 
+                    `${productionData.currentRate} kg/h`;
+                
+                // Update trend arrow
+                const trendElement = document.getElementById('rateTrend');
+                trendElement.className = `trend-arrow trend-${productionData.rateTrend}`;
+                trendElement.textContent = productionData.rateTrend === 'up' ? '↗' : '↘';
+
+                // Update efficiency circle
+                const efficiency = productionData.efficiency;
+                const angle = (efficiency / 100) * 360;
+                const circle = document.getElementById('efficiencyCircle');
+                circle.style.setProperty('--efficiency-angle', `${angle}deg`);
+                document.getElementById('efficiencyValue').textContent = `${efficiency}%`;
+
+                // Update secondary metrics
+                document.getElementById('activeLines').textContent = productionData.activeLines;
+                document.getElementById('uptime').textContent = productionData.uptime;
+                document.getElementById('quality').textContent = `${productionData.quality}%`;
+
+                // Update machine status
+                const statusElement = document.getElementById('machineStatus');
+                if (productionData.machineStatus === 'active') {
+                    statusElement.textContent = 'AKTIVNÍ';
+                    statusElement.className = 'status-badge';
+                } else {
+                    statusElement.textContent = 'POZOR';
+                    statusElement.className = 'status-badge warning';
+                }
+
+                // Remove updating animation
+                document.body.classList.remove('updating');
+            }, 200);
+        }
+
+        // Show error state
+        function showErrorState() {
+            document.getElementById('currentRate').textContent = 'Error';
+            document.getElementById('efficiencyValue').textContent = '--';
+            document.getElementById('activeLines').textContent = '--';
+            document.getElementById('uptime').textContent = '--';
+            document.getElementById('quality').textContent = '--';
+            
+            const statusElement = document.getElementById('machineStatus');
+            statusElement.textContent = 'CHYBA';
+            statusElement.className = 'status-badge error';
+        }
+
+        // Handle widget click
+        document.body.addEventListener('click', () => {
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({ action: 'openApp', target: '/production' }, '*');
+            } else {
+                window.open('/production', '_blank');
+            }
+        });
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initProductionWidget);
+        } else {
+            initProductionWidget();
+        }
+    </script>
+</body>
+</html>

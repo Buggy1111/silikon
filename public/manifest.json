@@ -1,0 +1,178 @@
+{
+  "name": "VMQ Výroba - Řídicí Centrum",
+  "short_name": "VMQ Výroba",
+  "description": "Pokročilá výrobní inteligence & analýzy v reálném čase pro VMQ výrobu",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#3B82F6",
+  "orientation": "any",
+  "categories": ["productivity", "business", "utilities"],
+  "lang": "cs",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-base.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "Hlavní přehled výroby",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Výroba",
+      "short_name": "Výroba",
+      "description": "Správa výrobních záznamů",
+      "url": "/production",
+      "icons": [
+        {
+          "src": "/icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Sklad",
+      "short_name": "Sklad",
+      "description": "Inventář materiálů",
+      "url": "/inventory",
+      "icons": [
+        {
+          "src": "/icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "widgets": [
+    {
+      "name": "VMQ Dashboard Widget",
+      "short_name": "VMQ Widget",
+      "description": "Kompaktní přehled výrobních metrik v reálném čase",
+      "tag": "vmq-dashboard",
+      "template": "vmq-dashboard-template",
+      "ms_ac_template": "adaptive-card",
+      "data": "/widget/data",
+      "type": "application/json",
+      "screenshots": [
+        {
+          "src": "/widget/widget-screenshot.png",
+          "sizes": "320x200",
+          "label": "VMQ Dashboard Widget Preview"
+        }
+      ],
+      "icons": [
+        {
+          "src": "/icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ],
+      "auth": false,
+      "update": 30
+    },
+    {
+      "name": "VMQ Production Monitor",
+      "short_name": "Výroba",
+      "description": "Monitoring aktuální výroby a efektivity",
+      "tag": "vmq-production",
+      "template": "vmq-production-template",
+      "ms_ac_template": "adaptive-card",
+      "data": "/widget/production-data",
+      "type": "application/json",
+      "screenshots": [
+        {
+          "src": "/widget/production-widget-screenshot.png",
+          "sizes": "320x150",
+          "label": "VMQ Production Widget Preview"
+        }
+      ],
+      "icons": [
+        {
+          "src": "/icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ],
+      "auth": false,
+      "update": 15
+    }
+  ]
+}

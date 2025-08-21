@@ -1,0 +1,11 @@
+{
+  "dailyProduction": 2847,
+  "productionChange": 12,
+  "efficiency": 94.2,
+  "efficiencyChange": 2.1,
+  "inventoryLevel": 86,
+  "inventoryChange": -4,
+  "wasteLevel": 2.1,
+  "wasteChange": -0.3,
+  "lastUpdate": "2025-01-21T14:30:00.000Z"
+}

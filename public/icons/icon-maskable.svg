@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- Main gradient background -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="50%" style="stop-color:#764ba2"/>
+      <stop offset="100%" style="stop-color:#3B82F6"/>
+    </linearGradient>
+    
+    <!-- Safe zone background (larger for maskable) -->
+    <linearGradient id="safeZoneGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4F46E5"/>
+      <stop offset="50%" style="stop-color:#7C3AED"/>
+      <stop offset="100%" style="stop-color:#2563EB"/>
+    </linearGradient>
+    
+    <!-- Factory elements gradient -->
+    <linearGradient id="factoryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#E2E8F0"/>
+    </linearGradient>
+    
+    <!-- VMQ text gradient -->
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#CBD5E1"/>
+    </linearGradient>
+    
+    <!-- Gear gradient -->
+    <linearGradient id="gearGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FCD34D"/>
+      <stop offset="100%" style="stop-color:#F59E0B"/>
+    </linearGradient>
+    
+    <!-- Drop shadow -->
+    <filter id="dropshadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Full bleed background for maskable (fills entire 512x512) -->
+  <rect x="0" y="0" width="512" height="512" fill="url(#safeZoneGradient)"/>
+  
+  <!-- Safe zone content area (center 80% = 409.6px, using 400px for cleaner numbers) -->
+  <!-- This ensures content stays visible even when icon is cropped to circle/rounded rectangle -->
+  
+  <!-- Central factory building (scaled and centered for safe zone) -->
+  <rect x="156" y="280" width="200" height="100" fill="url(#factoryGradient)" stroke="#1E40AF" stroke-width="2" rx="6" filter="url(#dropshadow)"/>
+  
+  <!-- Factory roof -->
+  <polygon points="136,280 176,240 336,240 376,280" fill="url(#factoryGradient)" stroke="#1E40AF" stroke-width="2"/>
+  
+  <!-- Modern chimneys (simplified for smaller scale) -->
+  <rect x="190" y="180" width="16" height="60" fill="url(#factoryGradient)" stroke="#1E40AF" stroke-width="1" rx="3"/>
+  <rect x="240" y="160" width="24" height="80" fill="url(#factoryGradient)" stroke="#1E40AF" stroke-width="1" rx="4"/>
+  <rect x="290" y="190" width="14" height="50" fill="url(#factoryGradient)" stroke="#1E40AF" stroke-width="1" rx="3"/>
+  
+  <!-- Steam effects (simplified) -->
+  <ellipse cx="198" cy="165" rx="6" ry="3" fill="#94A3B8" opacity="0.6"/>
+  <ellipse cx="252" cy="145" rx="8" ry="4" fill="#94A3B8" opacity="0.7"/>
+  <ellipse cx="297" cy="175" rx="5" ry="2" fill="#94A3B8" opacity="0.6"/>
+  
+  <!-- Windows (simplified grid) -->
+  <rect x="170" y="300" width="12" height="16" fill="#3B82F6" opacity="0.9" rx="1"/>
+  <rect x="190" y="300" width="12" height="16" fill="#3B82F6" opacity="0.9" rx="1"/>
+  <rect x="210" y="300" width="12" height="16" fill="#3B82F6" opacity="0.9" rx="1"/>
+  <rect x="280" y="300" width="12" height="16" fill="#3B82F6" opacity="0.9" rx="1"/>
+  <rect x="300" y="300" width="12" height="16" fill="#3B82F6" opacity="0.9" rx="1"/>
+  <rect x="320" y="300" width="12" height="16" fill="#3B82F6" opacity="0.9" rx="1"/>
+  
+  <!-- Main door -->
+  <rect x="240" y="350" width="24" height="30" fill="#1E40AF" rx="3"/>
+  <circle cx="258" cy="365" r="1.5" fill="url(#factoryGradient)"/>
+  
+  <!-- VMQ Text (positioned higher for better visibility in safe zone) -->
+  <text x="256" y="420" font-family="Arial, sans-serif" font-size="28" font-weight="bold" text-anchor="middle" fill="url(#textGradient)">VMQ</text>
+  
+  <!-- Production indicator (simplified) -->
+  <rect x="230" y="440" width="52" height="3" fill="url(#gearGradient)" rx="1" opacity="0.8"/>
+  <circle cx="240" cy="441.5" r="2" fill="url(#gearGradient)" opacity="0.9"/>
+  <circle cx="256" cy="441.5" r="2" fill="url(#gearGradient)" opacity="0.9"/>
+  <circle cx="272" cy="441.5" r="2" fill="url(#gearGradient)" opacity="0.9"/>
+  
+  <!-- Compact gear (positioned for safe zone) -->
+  <g transform="translate(360,320) scale(0.8)">
+    <circle cx="0" cy="0" r="18" fill="url(#gearGradient)" opacity="0.9"/>
+    <circle cx="0" cy="0" r="12" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.8"/>
+    <circle cx="0" cy="0" r="4" fill="#FFFFFF" opacity="0.9"/>
+    <!-- Simplified gear teeth -->
+    <rect x="-1.5" y="-22" width="3" height="6" fill="url(#gearGradient)"/>
+    <rect x="-1.5" y="16" width="3" height="6" fill="url(#gearGradient)"/>
+    <rect x="-22" y="-1.5" width="6" height="3" fill="url(#gearGradient)"/>
+    <rect x="16" y="-1.5" width="6" height="3" fill="url(#gearGradient)"/>
+  </g>
+  
+  <!-- Data signal indicator (compact) -->
+  <g transform="translate(160,320)" opacity="0.8">
+    <circle cx="0" cy="0" r="2.5" fill="#10B981" opacity="0.9"/>
+    <circle cx="0" cy="0" r="6" fill="none" stroke="#10B981" stroke-width="1" opacity="0.4"/>
+  </g>
+  
+  <!-- Performance bars (simplified) -->
+  <g transform="translate(350,350)" opacity="0.7">
+    <rect x="0" y="0" width="2" height="10" fill="#10B981"/>
+    <rect x="4" y="2" width="2" height="8" fill="#10B981"/>
+    <rect x="8" y="1" width="2" height="11" fill="#10B981"/>
+  </g>
+  
+  <!-- Border indicator for safe zone (visible only in design, remove for production) -->
+  <!-- <rect x="51" y="51" width="410" height="410" fill="none" stroke="#FF0000" stroke-width="1" stroke-dasharray="5,5" opacity="0.3"/> -->
+  
+</svg>

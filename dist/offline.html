@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VMQ Výroba - Offline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .retry-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .retry-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .features {
+            margin-top: 40px;
+            opacity: 0.8;
+        }
+
+        .features h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .features li::before {
+            content: "✓ ";
+            margin-right: 8px;
+            color: #4ade80;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .icon {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🏭</div>
+        <h1>VMQ Výroba</h1>
+        <p>Aplikace je momentálně offline. Zkontrolujte internetové připojení a zkuste to znovu.</p>
+        
+        <a href="/" class="retry-btn" onclick="window.location.reload(); return false;">
+            Zkusit znovu
+        </a>
+
+        <div class="features">
+            <h3>Offline funkce</h3>
+            <ul>
+                <li>Prohlížení naposledy načtených dat</li>
+                <li>Ukládání nových záznamů do lokální cache</li>
+                <li>Automatická synchronizace po obnovení spojení</li>
+                <li>Plná funkcionalnost po připojení k internetu</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Automatické obnovení při obnovení spojení
+        window.addEventListener('online', () => {
+            window.location.reload();
+        });
+
+        // Zkouška připojení každých 30 sekund
+        setInterval(() => {
+            fetch('/', { mode: 'no-cors' })
+                .then(() => {
+                    window.location.reload();
+                })
+                .catch(() => {
+                    // Stále offline
+                });
+        }, 30000);
+    </script>
+</body>
+</html>
